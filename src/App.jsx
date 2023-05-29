@@ -5,7 +5,7 @@ function App() {
     const [tasks, setTasks] = useState([]);
 
 
-    function getId(){
+    function getId() {
         if (!tasks.length) return 1;
         return Math.max(...tasks.map((task) => task.id)) + 1
     }
@@ -26,8 +26,11 @@ function App() {
 
     }
 
-    function handleDelete(event) {
-
+    function handleDelete(taskToDelete) {
+        return () => {
+            const newTasks = tasks.filter((task) => task !== taskToDelete);
+            setTasks(newTasks);
+        }
     }
 
     return (
@@ -44,7 +47,7 @@ function App() {
                     <li key={task.id}>
                         <span>{task.name}</span>
                         <button
-                            onClick={handleDelete}
+                            onClick={handleDelete(task)}
                         >delete
                         </button>
                     </li>
